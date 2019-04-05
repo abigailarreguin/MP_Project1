@@ -5,15 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StartActivity">
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
-        android:text="Go To Home Activity"
+        android:text="@string/go_to_home_activity"
         tools:layout_editor_absoluteX="105dp"
         tools:layout_editor_absoluteY="147dp" />
 </LinearLayout>

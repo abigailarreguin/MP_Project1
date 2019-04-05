@@ -19,7 +19,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         Button loginButton = (Button)(findViewById(R.id.loginButton));
-// Write a message to the database
+        // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("testMSG");
         myRef.setValue(Calendar.getInstance().getTime().toString());
