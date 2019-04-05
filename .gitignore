@@ -9,3 +9,7 @@
 /build
 /captures
 .externalNativeBuild
+.keystore
+.json
+*.json
+*.json
