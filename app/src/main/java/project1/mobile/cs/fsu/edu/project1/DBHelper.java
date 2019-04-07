@@ -5,53 +5,60 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.type.LatLng;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 import java.io.Console;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DBHelper {
     public final static String TAG="DBHELPER";
-    private FirebaseFirestore db;
+    private FirebaseDatabase db;
     DBHelper(){
-        db=FirebaseFirestore.getInstance();
+        db=FirebaseDatabase.getInstance();
     }
-    public void getUserName(String userID){
-        DocumentReference documentReference= db.collection("users").document(userID);
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+    public void getUserName( String userID){
+        db.getReference(userID).child("fName").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot doc=task.getResult();
-                if (doc.exists()){
-                    String usrName=doc.getString("name");
-                    Log.d(TAG, usrName);
-                }
-                else{
-                    Log.d(TAG, "name not found!");
-                }
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String uname =dataSnapshot.getValue().toString();
+                Log.d(TAG, "user firstname: "+uname);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(TAG, "Loading username failed");
             }
         });
     }
-    /*public Location getUserLocation(String userID){
-       DocumentReference documentReference= db.collection("users").document(userID);
-       documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-           @Override
-           public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-               DocumentSnapshot doc= task.getResult();
-               if(doc.exists()){
-                   Location usrlocation=new Location();
-                   usrlocation.setLatitude( doc.getGeoPoint("location").getLatitude());
+    public void getUser(String userID){
 
-                   Log.d("usrlocation",usrLocation.toString());
-               }
-               else{}
-           }
-       })
-    }*/
+        db.getReference(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+              for (DataSnapshot userSnapshot:dataSnapshot.getChildren()){
+                  User temp=userSnapshot.getValue(User.class);
+                  Log.d(TAG, "user got="+temp);
+              }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void putUser(int userID, User inUser){
+        db.getReference("users/"+userID).setValue(inUser);
+    }
+    
 }
