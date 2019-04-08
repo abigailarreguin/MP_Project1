@@ -3,7 +3,7 @@ package project1.mobile.cs.fsu.edu.project1;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.util.Log;
-
+//import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -60,5 +60,23 @@ public class DBHelper {
     public void putUser(int userID, User inUser){
         db.getReference("users/"+userID).setValue(inUser);
     }
-    
+    public void GetUserLocation(String userID) {
+        db.getReference(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    //LatLng temp = userSnapshot.getValue(User.location);
+                    //Log.d(TAG, "user got=" + temp);
+                }
+            }
+
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void updateUserLocation(String userID,String latlng){
+        db.getReference("users/"+userID).setValue(latlng);
+
+    }
 }
