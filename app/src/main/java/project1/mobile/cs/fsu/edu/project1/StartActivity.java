@@ -26,6 +26,12 @@ import org.w3c.dom.Text;
 import java.nio.file.StandardWatchEventKinds;
 import java.util.Objects;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
+
 public class StartActivity extends AppCompatActivity {
 
     private EditText userUsername;

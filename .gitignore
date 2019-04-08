@@ -9,3 +9,8 @@
 /build
 /captures
 .externalNativeBuild
+.keystore
+.json
+*.json
+*.json
+app/google-services.json
