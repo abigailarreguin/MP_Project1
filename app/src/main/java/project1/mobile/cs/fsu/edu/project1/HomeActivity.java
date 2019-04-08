@@ -5,16 +5,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class HomeActivity extends AppCompatActivity {
 
+import java.util.HashMap;
+import java.util.Map;
+
+public class HomeActivity extends AppCompatActivity {
+public final static String TAG="MAINACT";
+private User mainUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Intent intent=getIntent();
+        mainUser=intent.getParcelableExtra("loginuser");
+        Log.d(TAG, "Hello from HomeActivity "+mainUser.getName()+"!");
     }
-    public void OnGoMap(View view)
-    {
-        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-        startActivity(intent);
-    }
+
 }

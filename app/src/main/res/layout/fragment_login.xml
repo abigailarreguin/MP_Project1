@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginFragment">
+
+    <TextView
+        android:id="@+id/welcomeText2"
+        android:layout_width="wrap_content"
+        android:layout_height="61dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="324dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginRight="79dp"
+        android:text="DON'T HAVE AN ACCOUNT?"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="199dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginRight="150dp"
+        android:text="LOGIN"
+        tools:layout_editor_absoluteX="105dp"
+        tools:layout_editor_absoluteY="147dp" />
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="360dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginRight="150dp"
+        android:text="REGISTER"
+        tools:layout_editor_absoluteX="105dp"
+        tools:layout_editor_absoluteY="147dp" />
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="61dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginRight="27dp"
+        android:text="WELCOME TO PING MY FRIENDS!"
+        android:textSize="22sp" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="94dp"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword" />
+</RelativeLayout>
