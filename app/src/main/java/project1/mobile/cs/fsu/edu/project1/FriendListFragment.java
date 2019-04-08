@@ -67,8 +67,6 @@ public class FriendListFragment extends Fragment {
                 // Take curItem and will need to bundle and intent to map activity
             }
         });
-
-
     }
 
     @Override
@@ -98,6 +96,7 @@ public class FriendListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void intentFriendListFragment();

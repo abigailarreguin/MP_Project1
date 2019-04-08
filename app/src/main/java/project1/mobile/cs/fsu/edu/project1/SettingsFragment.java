@@ -44,7 +44,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Declare variables
-        final Spinner milesSpin = view.findViewById(R.id.settingsSpinner);
+        //final Spinner milesSpin = view.findViewById(R.id.settingsSpinner);
         final TextView userName = view.findViewById(R.id.settingsUser);
         final TextView phoneNum = view.findViewById(R.id.settingsPhone);
         final Switch modeSwitch = view.findViewById(R.id.settingsMode);
@@ -52,20 +52,20 @@ public class SettingsFragment extends Fragment {
 
         // Get Settings
         SharedPreferences settings = getActivity().getSharedPreferences("Settings", 0);
-        milesSpin.setSelection(settings.getInt("MILES",0));
+        //milesSpin.setSelection(settings.getInt("MILES",0));
         modeSwitch.setChecked(settings.getBoolean("PRIVATE",false));
 
         // Save Button || Performs sharedPerferences for milesSpin and modeSwitch
         saveBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int miles = milesSpin.getSelectedItemPosition();
+                //int miles = milesSpin.getSelectedItemPosition();
                 boolean isPrivate = modeSwitch.isChecked();
 
                 SharedPreferences settings = getActivity().getSharedPreferences("Settings", 0);
                 SharedPreferences.Editor editor = settings.edit();
 
-                editor.putInt("MILES", miles);
+                //editor.putInt("MILES", miles);
                 editor.putBoolean("PRIVATE",isPrivate);
                 editor.commit();
 
