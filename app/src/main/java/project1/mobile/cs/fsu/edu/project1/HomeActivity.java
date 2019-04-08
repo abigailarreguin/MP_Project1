@@ -1,5 +1,6 @@
 package project1.mobile.cs.fsu.edu.project1;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
@@ -13,13 +14,13 @@ import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
 public final static String TAG="MAINACT";
+private User mainUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-      // DBHelper dbhelp=new DBHelper();
-      // dbhelp.getUserName("iuU44hGA33c4A1uBnxcL");
-       //Toast.makeText(this, "Hello "+s+"!", Toast.LENGTH_SHORT).show();
+        Intent intent=getIntent();
+        mainUser=intent.getParcelableExtra("loginuser");
+        Toast.makeText(this, "Welcome to Ping my friends "+mainUser.getName(), Toast.LENGTH_SHORT).show();
     }
 }

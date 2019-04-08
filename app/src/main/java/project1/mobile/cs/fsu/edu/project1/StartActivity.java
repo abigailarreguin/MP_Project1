@@ -54,7 +54,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public ContentValues getCurrentContentValues() {
+    public User getCurrentContentValues() {
         userUsername = findViewById(R.id.userUsername);
         userName = findViewById(R.id.userName);
         userPassword = findViewById(R.id.userPassword);
@@ -63,12 +63,13 @@ public class StartActivity extends AppCompatActivity {
         userAgrees = findViewById(R.id.userAgree);
         String message = null;
 
-        ContentValues values = new ContentValues();
+        User regUser = new User();
 
         String name = userName.getText().toString().trim();
         if (!TextUtils.isEmpty(name)) {
             // THEN STORE IN VALUES
             // values.put(UserContract.UsersEntry.NAME, name.trim());
+            regUser.setName(name);
         } else {
             if (message == null)
                 message = "You must enter a name.";
@@ -79,8 +80,7 @@ public class StartActivity extends AppCompatActivity {
 
         String username = userUsername.getText().toString().trim();
         if (!TextUtils.isEmpty(username)) {
-            // THEN STORE IN VALUES
-            // values.put(UserContract.UsersEntry.USERNAME, username.trim());
+            regUser.setUsername(username);
         } else {
             if (message == null)
                 message = "You must enter a username";
@@ -101,8 +101,9 @@ public class StartActivity extends AppCompatActivity {
                 message = message + "\nYou must enter a password.";
             }
         }
-        if ((!TextUtils.isEmpty(password)) && (Objects.equals(password, confirmPassword))) {
-            // THEN STORE IN VALUES
+        //if ((!TextUtils.isEmpty(password)) && (Objects.equals(password, confirmPassword))) { this threw an error, slightly modified below
+        if((!TextUtils.isEmpty(password)&&(password.equals(confirmPassword)))){
+            regUser.setPassword(password);
         } else if (!TextUtils.isEmpty(password)) {
             if (message == null)
                 message = "Your passwords are not the same.";
@@ -114,7 +115,7 @@ public class StartActivity extends AppCompatActivity {
 
         String phone = userPhone.getText().toString().trim();
         if (!TextUtils.isEmpty(phone)) {
-            // THEN STORE IN VALUE
+            regUser.setPhone(phone);
         } else {
             if (message == null)
                 message = "You must enter a phone number";
@@ -144,9 +145,12 @@ public class StartActivity extends AppCompatActivity {
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
 
-            return (ContentValues) null;
+            return (User) null;
         } else {
-            return values;
+            //TODO NEED TO GET DEVICE LOCATION, BELOW IS TEMP CODE
+            regUser.setLocation("30.4419° N, 84.2985° W");
+            regUser.setLocationPublic(false);
+            return regUser;
         }
 
     }

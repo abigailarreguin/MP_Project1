@@ -24,31 +24,36 @@ import java.util.ArrayList;
         private String name;
         private String location;
         private Boolean isLocationPublic;
+        private String password;
 
         // ** Everyone is a User, maybe we will use this later
-        private Boolean isPendingUser;
-        private Boolean isUser;
+       // private Boolean isPendingUser;
+        //private Boolean isUser;
+        public User(){}
 
         /////  Constructor without pending Users
-        public User(int id, String username, String phone, String name, String location, Boolean isLocationPublic) {
+        public User(int id, String username,String password, String phone, String name, String location, Boolean isLocationPublic) {
             this.id = id;
             this.username = username;
             this.phone = phone;
             this.name = name;
             this.location = location;
             this.isLocationPublic = isLocationPublic;
+            this.password=password;
         }
 
         /////  Constructor with pending Users
-        public User(int id, String username, String phone, String name, String location, Boolean isLocationPublic, Boolean isPendingUser, Boolean isUser) {
+        public User(int id, String username,String password, String phone, String name, String location, Boolean isLocationPublic, Boolean isPendingUser, Boolean isUser) {
             this.id = id;
             this.username = username;
             this.phone = phone;
             this.name = name;
             this.location = location;
             this.isLocationPublic = isLocationPublic;
-            this.isPendingUser = isPendingUser;
-            this.isUser = isUser;
+           // this.isPendingUser = isPendingUser;
+           // this.isUser = isUser;
+            this.password=password;
+
         }
 
         ///// Parceable Methods
@@ -65,8 +70,9 @@ import java.util.ArrayList;
             dest.writeString(this.name);
             dest.writeString(this.location);
             dest.writeValue(this.isLocationPublic);
-            dest.writeValue(this.isPendingUser);
-            dest.writeValue(this.isUser);
+            //dest.writeValue(this.isPendingUser);
+            //dest.writeValue(this.isUser);
+            dest.writeString(this.password);
         }
 
         protected User(Parcel in) {
@@ -76,8 +82,9 @@ import java.util.ArrayList;
             this.name = in.readString();
             this.location = in.readString();
             this.isLocationPublic = (Boolean) in.readValue(Boolean.class.getClassLoader());
-            this.isPendingUser = (Boolean) in.readValue(Boolean.class.getClassLoader());
-            this.isUser = (Boolean) in.readValue(Boolean.class.getClassLoader());
+            //this.isPendingUser = (Boolean) in.readValue(Boolean.class.getClassLoader());
+            //this.isUser = (Boolean) in.readValue(Boolean.class.getClassLoader());
+            this.password=in.readString();
         }
 
         public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
@@ -116,13 +123,13 @@ import java.util.ArrayList;
             this.phone = phone;
         }
 
-        public Boolean getUser() {
-            return isUser;
-        }
+        //public Boolean getUser() {
+       //     return isUser;
+       // }
 
-        public void setUser(Boolean User) {
+       /* public void setUser(Boolean User) {
             isUser = User;
-        }
+        }*/
 
         public String getName() {
             return name;
@@ -148,11 +155,13 @@ import java.util.ArrayList;
             isLocationPublic = locationPublic;
         }
 
-        public Boolean getPendingUser() {
+        /*public Boolean getPendingUser() {
             return isPendingUser;
         }
 
         public void setPendingUser(Boolean pendingUser) {
             isPendingUser = pendingUser;
-        }
+        }*/
+        public void setPassword(String inpass){password=inpass;}
+        public String getPassword(){return password;}
     }
