@@ -3,7 +3,9 @@ package project1.mobile.cs.fsu.edu.project1;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 
 import java.util.HashMap;
@@ -18,7 +20,7 @@ private User mainUser;
         setContentView(R.layout.activity_home);
         Intent intent=getIntent();
         mainUser=intent.getParcelableExtra("loginuser");
-        Log.d(TAG, "Hello from HomeActivity "+mainUser.getName()+"!");
+        Toast.makeText(this, "Hello "+mainUser.getName()+"!", Toast.LENGTH_SHORT).show();
     }
 
 }
