@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,6 +30,27 @@ private User mainUser;
     {
         Intent myintent = new Intent(this, MapsActivity.class);
         startActivity(myintent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(this);
+        inflater.inflate(R.menu.options_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuSettings:
+                // BRANDON - start settings fragment here
+                return true;
+            case R.id.menuLogout:
+                Intent myOtherIntent = new Intent(this, StartActivity.class);
+                startActivity(myOtherIntent);
+                return true;
+        }
+        return true;
     }
 
 }
