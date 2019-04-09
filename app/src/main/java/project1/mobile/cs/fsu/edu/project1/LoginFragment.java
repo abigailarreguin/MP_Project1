@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 
 public class LoginFragment extends android.support.v4.app.Fragment {
     public final static String TAG="loginfragment";
@@ -68,12 +70,13 @@ public class LoginFragment extends android.support.v4.app.Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot result : dataSnapshot.getChildren()) {
-                                Log.d(TAG, "resultsnapshot: " + result.toString());
+                                Log.d(TAG, "result_snapshot: " + result.toString());
                                 User LoginUser=result.getValue(User.class);
                                 String remotepass =LoginUser.getPassword();
-                                if (loginPassword.equals(remotepass)) {
-                                    Intent myIntent = new Intent(getActivity(), HomeActivity.class);
-                                    myIntent.putExtra("loginuser",LoginUser);
+                                   if (loginPassword.equals(remotepass)) {
+
+                                       Intent myIntent = new Intent(getActivity(), HomeActivity.class);
+                                    myIntent.putExtra("login_user", LoginUser);
                                     getActivity().startActivity(myIntent);
                                 }
                                 else{
