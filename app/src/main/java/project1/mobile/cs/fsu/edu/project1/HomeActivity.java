@@ -23,4 +23,10 @@ private User mainUser;
         Toast.makeText(this, "Hello "+mainUser.getName()+"!", Toast.LENGTH_SHORT).show();
     }
 
+    public void OnGoMap(View view)
+    {
+        Intent myintent = new Intent(this, MapsActivity.class);
+        startActivity(myintent);
+    }
+
 }
