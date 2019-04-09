@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity implements FriendListFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener{
 
@@ -61,9 +62,27 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
 
     public void notifySingle()
     {
+        /*
+        String friendMsg = "I See You";
+
         builder.setContentTitle("Friend is Found");
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setWhen(System.currentTimeMillis());
+        builder.setContentText(friendMsg);
+        Toast.makeText(this, "Notification Test", Toast.LENGTH_SHORT).show();
         nm.notify(1,builder.build());
+        */
+
+        // Notification Variables
+        NotificationHelper noti;
+        noti = new NotificationHelper(this);
+
+        // Change these strings for the msg
+        String title = "This is Title";
+        String content = "This is content";
+
+        Notification.Builder nb = noti.getNotification1(title, content);
+        noti.notify(111,nb);
+
     }
 }
