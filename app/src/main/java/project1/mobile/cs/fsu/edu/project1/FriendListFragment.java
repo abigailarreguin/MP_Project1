@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
+
 
 
 /**
@@ -52,9 +52,11 @@ public class FriendListFragment extends Fragment {
         mAdapter = new FriendItemArrayAdapter(getActivity(), users);
 
 
+
         //********* Need a function to parse through the table and place into this adapter
 
         //mAdapter.add(new FriendItem(555,"test","test","test","test",false));
+
         listView.setAdapter(mAdapter);
 
         //********* Need a function to parse through the table and place into this adapter
@@ -69,6 +71,7 @@ public class FriendListFragment extends Fragment {
                 User curItem = mAdapter.getItem(positionNum);
                 if (curItem != null)
                     Toast.makeText(getActivity(), curItem.getUsername(), Toast.LENGTH_SHORT).show();
+
 
                 // Take curItem and will need to bundle and intent to map activity
             }

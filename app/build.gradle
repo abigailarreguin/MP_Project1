@@ -4,7 +4,8 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "project1.mobile.cs.fsu.edu.project1"
-        minSdkVersion 19
+        minSdkVersion 16
+
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -25,7 +26,8 @@ dependencies {
     implementation 'com.android.support:support-media-compat:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha4'
     implementation 'com.android.support:support-v4:28.0.0'
-    testImplementation 'junit:junit:4.13-beta-2'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+    testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'

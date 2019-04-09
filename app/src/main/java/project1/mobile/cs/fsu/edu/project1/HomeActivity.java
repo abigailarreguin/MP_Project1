@@ -12,15 +12,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.widget.Toast;
-
-
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +33,12 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
 
     private FirebaseDatabase db=FirebaseDatabase.getInstance();
     ArrayList <User>  users = new ArrayList<>();
+
+    // Notifications
+    NotificationManager nm;
+    Notification.Builder builder;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,15 +46,22 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
 
         User login_user = getIntent().getParcelableExtra("login_user");
         getUsers();
+
+
         // Starting fragment is FriendList
         intentFriendListFragment();
-        //intentSettingsFragment();
 
+        ///// Notifications
+        nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // 1st Notification && 2nd Notifications Declaration
+        builder = new Notification.Builder(getApplicationContext());
     }
 
+
+
+    //Gets list of users from database
     public void getUsers(){
-
-
         db.getReference().child("users").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -65,6 +82,9 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
             }
         });
     }
+
+
+
     @Override
     public void intentFriendListFragment() {
         // Starting variables//////////////
@@ -95,6 +115,7 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
         trans.addToBackStack("settingsFragment");
         trans.replace(R.id.frame_container, viewFragment);
         trans.commit();
+
     }
 
     public void OnGoMap(View view)
@@ -114,7 +135,7 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuSettings:
-                // BRANDON - start settings fragment here
+                intentSettingsFragment();
                 return true;
             case R.id.menuLogout:
                 Intent myOtherIntent = new Intent(this, StartActivity.class);
@@ -122,6 +143,32 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
                 return true;
         }
         return true;
+
     }
 
+    public void notifySingle()
+    {
+        /*
+        String friendMsg = "I See You";
+
+        builder.setContentTitle("Friend is Found");
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setWhen(System.currentTimeMillis());
+        builder.setContentText(friendMsg);
+        Toast.makeText(this, "Notification Test", Toast.LENGTH_SHORT).show();
+        nm.notify(1,builder.build());
+        */
+
+        // Notification Variables
+        NotificationHelper noti;
+        noti = new NotificationHelper(this);
+
+        // Change these strings for the msg
+        String title = "This is Title";
+        String content = "This is content";
+
+        Notification.Builder nb = noti.getNotification1(title, content);
+        noti.notify(111,nb);
+
+    }
 }
