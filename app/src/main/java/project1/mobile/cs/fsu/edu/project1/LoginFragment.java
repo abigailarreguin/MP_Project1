@@ -49,44 +49,36 @@ public class LoginFragment extends android.support.v4.app.Fragment {
 
 
         Button login = (Button) v.findViewById(R.id.loginButton);
-        //feel free to change, this was just to get the DB
-        EditText loginUserEbox= v.findViewById(R.id.username);
-        EditText loginPasswordEbox=v.findViewById(R.id.password);
+        final EditText loginUserEbox= v.findViewById(R.id.username);
+        final EditText loginPasswordEbox=v.findViewById(R.id.password);
 
         login.setOnClickListener(new View.OnClickListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                //fix
-                //final String loginUsername=loginUserEbox.getText().toString();
-                //final String loginPassword=loginPasswordEbox.getText().toString();
-                final String loginUsername="JThrasher";
-                final String loginPassword="ufsucks";
+                final String loginUsername=loginUserEbox.getText().toString();
+                final String loginPassword=loginPasswordEbox.getText().toString();
                 db.getReference().child("users").orderByChild("username").equalTo(loginUsername).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot result : dataSnapshot.getChildren()) {
                                 Log.d(TAG, "resultsnapshot: " + result.toString());
-                                User LoginUser=result.getValue(User.class);
-                                String remotepass =LoginUser.getPassword();
+                                User LoginUser = result.getValue(User.class);
+                                String remotepass = LoginUser.getPassword();
                                 if (loginPassword.equals(remotepass)) {
                                     Intent myIntent = new Intent(getActivity(), HomeActivity.class);
-                                    myIntent.putExtra("loginuser",LoginUser);
+                                    myIntent.putExtra("loginuser", LoginUser);
                                     getActivity().startActivity(myIntent);
-                                }
-                                else{
+                                } else {
                                     Toast.makeText(getContext(), "Password Incorrect!", Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             Toast.makeText(getContext(), "Username or password incorrect!", Toast.LENGTH_SHORT).show();
                         }
                     }
-
-
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -94,9 +86,6 @@ public class LoginFragment extends android.support.v4.app.Fragment {
 
                     }
                 });
-                // TO DO: Make sure username and password are in database
-                // If not, show error
-
             }
         });
 
