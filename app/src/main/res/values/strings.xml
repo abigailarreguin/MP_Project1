@@ -9,6 +9,7 @@
     <string name="public_setting">Public</string>
     <string name="private_setting">Private</string>
     <string name="save_settings">Save</string>
+    <string name="notify_when_nearby">Notify when Nearby?</string>
 
     <string-array name="settingsMiles">
         <item>0.5 mi</item>
