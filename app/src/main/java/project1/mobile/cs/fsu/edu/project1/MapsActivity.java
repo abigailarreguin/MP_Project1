@@ -1,8 +1,12 @@
 package project1.mobile.cs.fsu.edu.project1;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -10,29 +14,59 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private User mapUser;
+    private User loginUser;
     private GoogleMap mMap;
     double lat,lng;
+    private FirebaseDatabase db=FirebaseDatabase.getInstance();
+    DatabaseReference ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        Intent intent=getIntent();
-        mapUser=intent.getParcelableExtra("mapUser");
-        String[] latlngstr=mapUser.getLocation().split(",");
+        Intent intent = getIntent();
+        mapUser = intent.getParcelableExtra("mapUser");
+        loginUser = intent.getParcelableExtra("login_user");
+        ref = db.getReference().child("users/" + loginUser.getId() + "/NotifiedFriends");
+        String[] latlngstr = mapUser.getLocation().split(",");
+
         //wizardry if userlocation comes in as string
         //latlngstr[0]=latlngstr[0].replaceAll("[^\\\\.0123456789]","");
         //latlngstr[1]=latlngstr[1].replaceAll("[^\\\\.0123456789]","");
-       lat= Double.parseDouble(latlngstr[0]);
-        lng=Double.parseDouble(latlngstr[1]);
-    }
+        lat = Double.parseDouble(latlngstr[0]);
+        lng = Double.parseDouble(latlngstr[1]);
 
+        Switch notify = findViewById(R.id.add_as_notified);
+
+        notify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked) {
+
+                    Map<String, User> friend = new HashMap<>();
+                    friend.put(mapUser.getUsername(), mapUser);
+
+                    ref.push().setValue(mapUser);
+                }
+            }
+        });
+    }
 
     /**
      * Manipulates the map once available.

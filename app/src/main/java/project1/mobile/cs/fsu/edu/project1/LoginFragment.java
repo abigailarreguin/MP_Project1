@@ -79,8 +79,7 @@ public class LoginFragment extends android.support.v4.app.Fragment {
                                 if (loginPassword.equals(remotepass)) {
 									Intent myIntent = new Intent(getActivity(), HomeActivity.class);
 									myIntent.putExtra("login_user", LoginUser);
-                                 
-								 getActivity().startActivity(myIntent);
+								    getActivity().startActivity(myIntent);
                                 } else {
                                     Toast.makeText(getContext(), "Password Incorrect!", Toast.LENGTH_SHORT).show();
                                 }

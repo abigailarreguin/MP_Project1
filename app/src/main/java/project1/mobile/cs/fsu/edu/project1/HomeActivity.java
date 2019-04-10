@@ -45,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
     private FirebaseDatabase db=FirebaseDatabase.getInstance();
     DBHelper dbHelper=new DBHelper();
     ArrayList <User>  users = new ArrayList<>();
+    User login_user;
 
     // Notifications
     NotificationManager nm;
@@ -56,9 +57,8 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        final User login_user = getIntent().getParcelableExtra("login_user");
+        login_user = getIntent().getParcelableExtra("login_user");
         getUsers();
-
         fusedLocationClient= LocationServices.getFusedLocationProviderClient(this);
 
         // Starting fragment is FriendList
@@ -125,6 +125,7 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("users", users);
+        bundle.putParcelable("login_user", login_user);
         viewFragment.setArguments(bundle);
 
         // Added back stack
@@ -199,6 +200,16 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
 
         Notification.Builder nb = noti.getNotification1(title, content);
         noti.notify(111,nb);
+
+    }
+
+    @Override
+    public User getUserDB(User status) {
+        return null;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }

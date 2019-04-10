@@ -1,5 +1,6 @@
 package project1.mobile.cs.fsu.edu.project1;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,7 +11,7 @@ public class NotificationHelper extends ContextWrapper {
     private NotificationManager manager;
     public static final String PRIMARY_CHANNEL = "default";
 
-
+    @TargetApi(26)
     public NotificationHelper(Context base) {
         super(base);
 
@@ -19,6 +20,7 @@ public class NotificationHelper extends ContextWrapper {
 
     }
 
+    @TargetApi(26)
     public Notification.Builder getNotification1(String title, String body) {
         return new Notification.Builder(getApplicationContext(), PRIMARY_CHANNEL)
                 .setContentTitle(title)

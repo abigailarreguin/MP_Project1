@@ -69,7 +69,7 @@ public class RegisterFragment extends Fragment {
                             dbHelper.putUser(userID,regUser);//actual put to db
                             db.getReference("userCount").setValue(userID+1);//increment users
                             Intent myIntent = new Intent(getActivity(), HomeActivity.class);
-                            myIntent.putExtra("loginuser",regUser);
+                            myIntent.putExtra("login_user",regUser);
                             getActivity().startActivity(myIntent);
                         }
 

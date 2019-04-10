@@ -69,14 +69,9 @@ public class SettingsFragment extends Fragment {
                 editor.putBoolean("PRIVATE",isPrivate);
                 editor.commit();
 
-                Toast.makeText(getActivity(), "Settings Applied In Next Restart", Toast.LENGTH_SHORT).show();
-
-                //DBHelper dbHelper = new DBHelper();
-                //dbHelper.putUser(999, new User(999, "test", "test", "test", "test", "test", true));
-                //dbHelper.getUser("999");
-
-                mListener.notifySingle();
-                //Toast.makeText(getActivity(), "Settings Applied In Next Restart", Toast.LENGTH_SHORT).show();
+                //////////////////************Take this function and place into emergency button
+                DBHelper dbHelper = new DBHelper();
+                dbHelper.setEmergency(getContext(), "ID", "location");
 
             }
         });
@@ -113,9 +108,8 @@ public class SettingsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void intentSettingsFragment();
-
         void notifySingle();
-
+        User getUserDB(User status);
     }
 
 }

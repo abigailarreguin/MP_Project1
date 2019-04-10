@@ -47,7 +47,7 @@ public class FriendListFragment extends Fragment {
 
         Bundle bundle = getArguments();
         ArrayList<User> users = bundle.getParcelableArrayList("users");
-
+        final User login_user = bundle.getParcelable("login_user");
         // Adapter && Listview Variables
         ListView listView = (ListView)view.findViewById(R.id.list);
         mAdapter = new FriendItemArrayAdapter(getActivity(), users);
@@ -74,6 +74,7 @@ public class FriendListFragment extends Fragment {
                     //Toast.makeText(getActivity(), curItem.getUsername(), Toast.LENGTH_SHORT).show();
                     Intent mapIntent=new Intent(getActivity(),MapsActivity.class);
                     mapIntent.putExtra("mapUser",curItem);
+                    mapIntent.putExtra("login_user", login_user);
                     getActivity().startActivity(mapIntent);
 
                 }
