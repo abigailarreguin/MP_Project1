@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
         setContentView(R.layout.activity_home);
 
         login_user = getIntent().getParcelableExtra("login_user");
-        getUsers();
+        //getUsers();
         fusedLocationClient= LocationServices.getFusedLocationProviderClient(this);
 
         // Starting fragment is FriendList
@@ -91,27 +91,6 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
 
 
     //Gets list of users from database
-    public void getUsers(){
-        db.getReference().child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.exists()){
-
-                    for(DataSnapshot res : dataSnapshot.getChildren()){
-
-                        users.add(res.getValue(User.class));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
 
 
@@ -124,7 +103,7 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
         FragmentTransaction trans = fm.beginTransaction();
 
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("users", users);
+        //bundle.putParcelableArrayList("users", users);
         bundle.putParcelable("login_user", login_user);
         viewFragment.setArguments(bundle);
 

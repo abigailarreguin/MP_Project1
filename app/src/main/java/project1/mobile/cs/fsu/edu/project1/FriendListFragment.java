@@ -13,6 +13,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 
@@ -24,7 +30,7 @@ import java.util.ArrayList;
  * to handle interaction events.
  */
 public class FriendListFragment extends Fragment {
-
+    ListView listView;
     private OnFragmentInteractionListener mListener;
     private FriendItemArrayAdapter mAdapter;
 
@@ -49,16 +55,15 @@ public class FriendListFragment extends Fragment {
         ArrayList<User> users = bundle.getParcelableArrayList("users");
         final User login_user = bundle.getParcelable("login_user");
         // Adapter && Listview Variables
-        ListView listView = (ListView)view.findViewById(R.id.list);
-        mAdapter = new FriendItemArrayAdapter(getActivity(), users);
-
+        listView = view.findViewById(R.id.list);
+        //
+        getUsers();
 
 
         //********* Need a function to parse through the table and place into this adapter
 
         //mAdapter.add(new FriendItem(555,"test","test","test","test",false));
 
-        listView.setAdapter(mAdapter);
 
         //********* Need a function to parse through the table and place into this adapter
 
@@ -83,6 +88,32 @@ public class FriendListFragment extends Fragment {
             }
         });
     }
+
+    public void getUsers(){
+        FirebaseDatabase.getInstance().getReference().child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            ArrayList <User>  users = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()){
+
+                    for(DataSnapshot res : dataSnapshot.getChildren()){
+
+                        users.add(res.getValue(User.class));
+                    }
+                }
+                mAdapter=new FriendItemArrayAdapter(getActivity(),users);
+                listView.setAdapter(mAdapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     @Override
     public void onAttach(Context context) {
