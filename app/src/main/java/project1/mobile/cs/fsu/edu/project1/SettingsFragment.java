@@ -49,11 +49,21 @@ public class SettingsFragment extends Fragment {
         final TextView phoneNum = view.findViewById(R.id.settingsPhone);
         final Switch modeSwitch = view.findViewById(R.id.settingsMode);
         final Button saveBut = view.findViewById(R.id.settingsSaveBut);
+        final Button emergencyBut = view.findViewById(R.id.settingsEmergency);
 
         // Get Settings
         SharedPreferences settings = getActivity().getSharedPreferences("Settings", 0);
         //milesSpin.setSelection(settings.getInt("MILES",0));
         modeSwitch.setChecked(settings.getBoolean("PRIVATE",false));
+
+        emergencyBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DBHelper dbHelper = new DBHelper();
+                dbHelper.setEmergency(getContext(), "ID", "location");
+            }
+        });
 
         // Save Button || Performs sharedPerferences for milesSpin and modeSwitch
         saveBut.setOnClickListener(new View.OnClickListener() {
@@ -68,10 +78,6 @@ public class SettingsFragment extends Fragment {
                 //editor.putInt("MILES", miles);
                 editor.putBoolean("PRIVATE",isPrivate);
                 editor.commit();
-
-                //////////////////************Take this function and place into emergency button
-                DBHelper dbHelper = new DBHelper();
-                dbHelper.setEmergency(getContext(), "ID", "location");
 
             }
         });
