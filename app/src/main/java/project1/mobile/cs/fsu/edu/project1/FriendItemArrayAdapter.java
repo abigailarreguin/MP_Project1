@@ -49,7 +49,7 @@ public class FriendItemArrayAdapter extends ArrayAdapter<User> {
 
                 // Insert the textviews ID's here from R.layout.friendsRow
                 viewHolder.textView_Title = (TextView) convertView.findViewById(R.id.rowTitle);
-                viewHolder.textView_friendAdd = (TextView) convertView.findViewById(R.id.rowFriendAdd);
+                // viewHolder.textView_friendAdd = (TextView) convertView.findViewById(R.id.rowFriendAdd);
 
 
                 // End of comment
@@ -62,7 +62,7 @@ public class FriendItemArrayAdapter extends ArrayAdapter<User> {
             // Set the required text for the TextView declared above
             if(item != null){
             viewHolder.textView_Title.setText(item.getName());
-            viewHolder.textView_friendAdd.setText(item.getLocation());
+            // viewHolder.textView_friendAdd.setText(item.getLocation());
             }
 
 
