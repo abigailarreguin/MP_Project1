@@ -51,9 +51,9 @@
 
         <LinearLayout
             android:id="@+id/set_privacy"
+            android:layout_below="@+id/set_distance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/set_distance"
             android:layout_marginTop="30dp">
 
             <TextView
@@ -62,8 +62,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginEnd="100dp"
                 android:layout_marginRight="100dp"
+                android:layout_marginEnd="100dp"
                 android:text="Privacy" />
 
             <Switch
@@ -94,13 +94,12 @@
                 android:layout_marginRight="80dp"
                 android:text="@string/save_settings" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Emergency" />
-        </LinearLayout>
-
+        <Button
+            android:id="@+id/settingsEmergency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Emergency" />
+    </LinearLayout>
     </RelativeLayout>
 
 </FrameLayout>
