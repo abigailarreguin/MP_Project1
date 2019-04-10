@@ -1,6 +1,7 @@
 package project1.mobile.cs.fsu.edu.project1;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,16 +15,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+
 
 public class LoginFragment extends android.support.v4.app.Fragment {
     public final static String TAG="loginfragment";
     private FirebaseDatabase db=FirebaseDatabase.getInstance();
+    private FusedLocationProviderClient fusedLocationClient;
     public LoginFragment() {
     }
 
@@ -64,13 +72,14 @@ public class LoginFragment extends android.support.v4.app.Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot result : dataSnapshot.getChildren()) {
-                                Log.d(TAG, "resultsnapshot: " + result.toString());
-                                User LoginUser = result.getValue(User.class);
-                                String remotepass = LoginUser.getPassword();
+
+                                Log.d(TAG, "result_snapshot: " + result.toString());
+                                User LoginUser=result.getValue(User.class);
+                                String remotepass =LoginUser.getPassword();
                                 if (loginPassword.equals(remotepass)) {
-                                    Intent myIntent = new Intent(getActivity(), HomeActivity.class);
-                                    myIntent.putExtra("loginuser", LoginUser);
-                                    getActivity().startActivity(myIntent);
+									Intent myIntent = new Intent(getActivity(), HomeActivity.class);
+									myIntent.putExtra("login_user", LoginUser);
+								    getActivity().startActivity(myIntent);
                                 } else {
                                     Toast.makeText(getContext(), "Password Incorrect!", Toast.LENGTH_SHORT).show();
                                 }
