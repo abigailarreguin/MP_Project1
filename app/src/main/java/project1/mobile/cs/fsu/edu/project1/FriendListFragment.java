@@ -1,6 +1,7 @@
 package project1.mobile.cs.fsu.edu.project1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -69,9 +70,13 @@ public class FriendListFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 int positionNum = adapterView.getPositionForView(view);
                 User curItem = mAdapter.getItem(positionNum);
-                if (curItem != null)
-                    Toast.makeText(getActivity(), curItem.getUsername(), Toast.LENGTH_SHORT).show();
+                if (curItem != null) {
+                    //Toast.makeText(getActivity(), curItem.getUsername(), Toast.LENGTH_SHORT).show();
+                    Intent mapIntent=new Intent(getActivity(),MapsActivity.class);
+                    mapIntent.putExtra("mapUser",curItem);
+                    getActivity().startActivity(mapIntent);
 
+                }
 
                 // Take curItem and will need to bundle and intent to map activity
             }

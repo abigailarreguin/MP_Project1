@@ -1,10 +1,15 @@
 package project1.mobile.cs.fsu.edu.project1;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +25,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,8 +41,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity implements FriendListFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener{
-
+    private FusedLocationProviderClient fusedLocationClient;
     private FirebaseDatabase db=FirebaseDatabase.getInstance();
+    DBHelper dbHelper=new DBHelper();
     ArrayList <User>  users = new ArrayList<>();
 
     // Notifications
@@ -44,9 +56,10 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        User login_user = getIntent().getParcelableExtra("login_user");
+        final User login_user = getIntent().getParcelableExtra("login_user");
         getUsers();
 
+        fusedLocationClient= LocationServices.getFusedLocationProviderClient(this);
 
         // Starting fragment is FriendList
         intentFriendListFragment();
@@ -56,6 +69,23 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
 
         // 1st Notification && 2nd Notifications Declaration
         builder = new Notification.Builder(getApplicationContext());
+        //check if user grants location permission, then update database accordingly
+        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
+            fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    String temp=(Double.toString(location.getLatitude())+","+Double.toString(location.getLongitude()));
+                    dbHelper.updateUserLocation(Integer.toString(login_user.getId()),temp);
+                }
+            });
+        }
+        else{
+            //if user has not granted location permission give them dummy location
+            String temploc=new String("48.067222"+","+"12.863611");
+            dbHelper.updateUserLocation(Integer.toString(login_user.getId()),temploc);
+        }
+
+
     }
 
 

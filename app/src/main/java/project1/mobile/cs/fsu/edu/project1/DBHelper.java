@@ -4,6 +4,7 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 import android.util.Log;
 //import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -79,8 +80,8 @@ public class DBHelper {
             }
         });
     }
-    public void updateUserLocation(String userID,String latlng){
-        db.getReference("users/"+userID).setValue(latlng);
+    public void updateUserLocation(String userID, String inloc){
+        db.getReference("users/"+userID+"/location").setValue(inloc.toString());
 
     }
 }
