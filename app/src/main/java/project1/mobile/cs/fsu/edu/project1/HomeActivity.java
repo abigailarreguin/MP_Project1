@@ -142,6 +142,10 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction trans = fm.beginTransaction();
 
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("login_user",login_user);
+        viewFragment.setArguments(bundle);
+
         // Added back stack
         trans.addToBackStack("settingsFragment");
         trans.replace(R.id.frame_container, viewFragment);
@@ -179,17 +183,6 @@ public class HomeActivity extends AppCompatActivity implements FriendListFragmen
 
     public void notifySingle()
     {
-        /*
-        String friendMsg = "I See You";
-
-        builder.setContentTitle("Friend is Found");
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setWhen(System.currentTimeMillis());
-        builder.setContentText(friendMsg);
-        Toast.makeText(this, "Notification Test", Toast.LENGTH_SHORT).show();
-        nm.notify(1,builder.build());
-        */
-
         // Notification Variables
         NotificationHelper noti;
         noti = new NotificationHelper(this);

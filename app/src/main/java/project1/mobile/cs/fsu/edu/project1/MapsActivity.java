@@ -28,8 +28,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private User loginUser;
     private GoogleMap mMap;
     double lat,lng;
-    private FirebaseDatabase db=FirebaseDatabase.getInstance();
-    DatabaseReference ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +40,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = getIntent();
         mapUser = intent.getParcelableExtra("mapUser");
         loginUser = intent.getParcelableExtra("login_user");
-        ref = db.getReference().child("users/" + loginUser.getId() + "/NotifiedFriends");
+
         String[] latlngstr = mapUser.getLocation().split(",");
 
-        //wizardry if userlocation comes in as string
-        //latlngstr[0]=latlngstr[0].replaceAll("[^\\\\.0123456789]","");
-        //latlngstr[1]=latlngstr[1].replaceAll("[^\\\\.0123456789]","");
         lat = Double.parseDouble(latlngstr[0]);
         lng = Double.parseDouble(latlngstr[1]);
 
@@ -58,11 +53,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked) {
-
-                    Map<String, User> friend = new HashMap<>();
-                    friend.put(mapUser.getUsername(), mapUser);
-
-                    ref.push().setValue(mapUser);
+                    DBHelper dbHelper = new DBHelper();
+                    //dbHelper.setFriendList(String.valueOf(loginUser.getId()));
+                    dbHelper.addFriendList(getApplicationContext(),String.valueOf(loginUser.getId()),
+                            String.valueOf(mapUser.getId()));
+                    dbHelper.GetUserLocation(String.valueOf(mapUser.getId()), getApplicationContext());
+                }
+                else{
+                    DBHelper dbHelper = new DBHelper();
+                    dbHelper.removeFromFriendList(getApplicationContext(),String.valueOf(loginUser.getId()),
+                            String.valueOf(mapUser.getId()));
                 }
             }
         });
