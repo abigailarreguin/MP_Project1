@@ -2,6 +2,8 @@ package project1.mobile.cs.fsu.edu.project1;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +17,10 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -43,6 +49,7 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final User login_user = getArguments().getParcelable("login_user");
         // Declare variables
         //final Spinner milesSpin = view.findViewById(R.id.settingsSpinner);
         final TextView userName = view.findViewById(R.id.settingsUser);
@@ -53,7 +60,6 @@ public class SettingsFragment extends Fragment {
 
         // Get Settings
         SharedPreferences settings = getActivity().getSharedPreferences("Settings", 0);
-        //milesSpin.setSelection(settings.getInt("MILES",0));
         modeSwitch.setChecked(settings.getBoolean("PRIVATE",false));
 
         emergencyBut.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +67,23 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
 
                 DBHelper dbHelper = new DBHelper();
-                dbHelper.setEmergency(getContext(), "ID", "location");
+                String[] latlngstr = login_user.getLocation().split(",");
+                double lat = Double.parseDouble(latlngstr[0]);
+                double lng = Double.parseDouble(latlngstr[1]);
+
+                List<Address> addresses;
+                String address;
+                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+                try {
+                    addresses = geocoder.getFromLocation(lat, lng, 1);
+                    address = addresses.get(0).getAddressLine(0);
+                    dbHelper.setEmergency(getContext(), login_user.getName(), address);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 

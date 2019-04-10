@@ -78,9 +78,7 @@ public class RegisterFragment extends Fragment {
                             Toast.makeText(getContext(), "Error connecting to database, try again later", Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
-
             }
         });
         return v;
