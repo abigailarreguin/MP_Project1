@@ -8,3 +8,6 @@ Oluwanifemi Adeyemo
 Emilio Murillo
 Brandon Hok
 Bennett Bridges
+
+# Credits to 
+Google Documentation for many implementations
