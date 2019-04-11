@@ -33,7 +33,7 @@ public class FriendListFragment extends Fragment {
     ListView listView;
     private OnFragmentInteractionListener mListener;
     private FriendItemArrayAdapter mAdapter;
-
+    User login_user;
 
     public FriendListFragment() {
         // Required empty public constructor
@@ -53,7 +53,7 @@ public class FriendListFragment extends Fragment {
 
         Bundle bundle = getArguments();
         ArrayList<User> users = bundle.getParcelableArrayList("users");
-        final User login_user = bundle.getParcelable("login_user");
+        login_user =(User) bundle.getParcelable("login_user");
         // Adapter && Listview Variables
         listView = view.findViewById(R.id.list);
         //
@@ -92,14 +92,17 @@ public class FriendListFragment extends Fragment {
     public void getUsers(){
         FirebaseDatabase.getInstance().getReference().child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList <User>  users = new ArrayList<>();
+            final User refuser=login_user;//yeah its ghetto, sue me
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.exists()){
 
                     for(DataSnapshot res : dataSnapshot.getChildren()){
-
-                        users.add(res.getValue(User.class));
+                        User temp=res.getValue(User.class);
+                        if(temp.getId()!=refuser.getId()) {
+                            users.add(res.getValue(User.class));
+                        }
                     }
                 }
                 mAdapter=new FriendItemArrayAdapter(getActivity(),users);
